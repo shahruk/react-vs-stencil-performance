@@ -63,9 +63,8 @@
     async function getResults() {
       let response = await fetch('./results.json');
       let results = await response.json();
-      let masterKeys = Object.keys(results[0]['y'][0]);
-      console.log(results, masterKeys);
-
+      let urlParams = new URLSearchParams(window.location.search);
+      let masterKeys = window.location.search ? urlParams.getAll('key') : Object.keys(results[0]['y'][0]);
       masterKeys.forEach(key => {
         appendGraph(results, key);
       });
