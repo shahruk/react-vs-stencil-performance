@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  <title>React vs StencilJS Performance</title>
+  <script src="https://cdn.plot.ly/plotly-2.9.0.min.js"></script>
+</head>
+<body>
+  <script>
+    function appendGraph(results, key) {
+      console.log(key);
+      let html = `<div id="${key}"></div>`;
+      document.body.innerHTML += html;
+      let layout = {
+        title: {
+          text: key,
+          font: {
+            family: 'Courier New, monospace',
+            size: 24
+          },
+          xref: 'paper',
+          x: 0.05,
+        },
+        xaxis: {
+          title: {
+            text: 'Number of DOM Elements (in thousands)',
+            font: {
+              family: 'Courier New, monospace',
+              size: 18,
+              color: '#7f7f7f'
+            }
+          },
+        },
+        yaxis: {
+          title: {
+            text: key,
+            font: {
+              family: 'Courier New, monospace',
+              size: 18,
+              color: '#7f7f7f'
+            }
+          }
+        }
+      };
+
+        let trace1 = {
+          x: results[0]['x'],
+          y: results[0]['y'].map(trace => trace[key]),
+          type: 'scatter',
+          name: 'StencilJS'
+        };
+        
+        let trace2 = {
+          x: results[1]['x'],
+          y: results[1]['y'].map(trace => trace[key]),
+          type: 'scatter',
+          name: 'React'
+        };
+        var data = [trace1, trace2];
+        Plotly.newPlot(key, data, layout);
+
+    }
+
+    async function getResults() {
+      let response = await fetch('./results.json');
+      let results = await response.json();
+      let masterKeys = Object.keys(results[0]['y'][0]);
+      console.log(results, masterKeys);
+
+      masterKeys.forEach(key => {
+        appendGraph(results, key);
+      });
+    }
+
+    getResults();
+  </script>
+</body>
+</html>
