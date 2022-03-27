@@ -55,7 +55,16 @@
           type: 'scatter',
           name: 'React'
         };
-        var data = [trace1, trace2];
+
+        let trace3 = {
+          x: results[2]['x'],
+          y: results[2]['y'].map(trace => trace[key]),
+          type: 'scatter',
+          name: 'React Gremy0'
+        };
+
+
+        var data = [trace1, trace2, trace3];
         Plotly.newPlot(key, data, layout);
 
     }
@@ -65,6 +74,7 @@
       let results = await response.json();
       let urlParams = new URLSearchParams(window.location.search);
       let masterKeys = window.location.search ? urlParams.getAll('key') : Object.keys(results[0]['y'][0]);
+      console.log(Object.keys(results[0]['y'][0]));
       masterKeys.forEach(key => {
         appendGraph(results, key);
       });

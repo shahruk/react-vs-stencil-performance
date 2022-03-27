@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const puppeteer = require('puppeteer');
-const domains = ['http://localhost:3335/', 'http://localhost:3001/'];
+const domains = ['http://localhost:3335/', 'http://localhost:3001/', 'http://localhost:3002/'];
 
 const loops = 100;
 

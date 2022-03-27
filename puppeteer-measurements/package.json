@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": " node index.js",
     "performance": " node performance_tests.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
